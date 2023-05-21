@@ -1,10 +1,9 @@
 import Image from 'next/image'
-import Nav from '../components/Nav'
-export default function Home() {
+import Home from '../components/Home'
+export default function Main() {
   return (
     <main >
-      <p>This is sample text</p>
-      <Nav />
+       <Home/>
     </main>
   )
 }
