@@ -14,8 +14,12 @@ export default function RootLayout({ children }) {
       <head>
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet"/>
       </head>
-      <body className={inter.className}>
-        {children}
+      <body className={inter.className} suppressHydrationWarning={true} >
+        
+        <div className='container'>
+          <Nav/>
+          {children}
+        </div>
       </body>
       
     </html>

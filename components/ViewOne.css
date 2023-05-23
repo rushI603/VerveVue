@@ -1,0 +1,113 @@
+ .writable-fields {
+    box-sizing: border-box;
+    min-width: 0px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.feilds-wrapper {
+    box-sizing: border-box;
+    min-width: 0px;
+    padding: 40px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 830px;
+
+}
+
+.low-level-wrapper {
+    box-sizing: border-box;
+    
+    overflow: hidden;
+    min-width: 0px;
+    height: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.flex-wrapper {
+    box-sizing: border-box;
+    min-width: 0px;
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+}
+.flex-item input {
+    resize: vertical;
+    background-color: rgb(255, 255, 255);
+    transition: border-color 0.25s ease 0s;
+    cursor: auto;
+    box-sizing: border-box;
+    min-width: 0px;
+    appearance: none;
+    width: 100%;
+    border: 1px solid rgb(208, 213, 231);
+    border-radius: 2px;
+    height: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 15px;
+    line-height: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px;
+}
+
+.flex-item input:focus {
+    outline: none;
+    border-color: blue;
+}
+
+.label-header{
+    box-sizing: border-box;
+    min-width: 0px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 20px;
+}
+
+.label-header label {
+    box-sizing: border-box;
+    padding: 10px;
+    min-width: 0px;
+    display: inline-flex;
+    color: rgb(25, 28, 44);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.label-left-header {
+    box-sizing: border-box;
+    min-width: 0px;
+    display: flex;
+    gap: 4px;
+    flex-flow: row nowrap;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 22px;
+}
+
+.label-left-header span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    box-sizing: border-box;
+    min-width: 0px;
+    display: inline-block;
+    gap: 4px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: rgb(240, 242, 250);
+    color: rgb(77, 86, 121);
+}

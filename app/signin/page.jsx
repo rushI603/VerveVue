@@ -1,6 +1,43 @@
-import React from 'react'
-import './style.css'
-const Login = () => {
+import {GraphQLClient} from 'graphql-request'
+
+
+const Login = async () => {
+  const hygraph = new GraphQLClient(
+    'https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master');
+  const {posts} = await hygraph.request(
+    `
+    {
+      posts {
+        comments {
+          author {
+            name
+            photo {
+              url
+            }
+          }
+          comment
+        }
+        author {
+          ... on Author {
+            name
+            photo {
+              url
+            }
+          }
+        }
+        likes
+        title
+        featuredImage {
+          url
+        }
+        content {
+          text
+        }
+      }
+    }
+    `
+  )
+  console.log(posts)
   return (
     <div>
       <div class="login-box">

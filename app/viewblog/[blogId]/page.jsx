@@ -1,9 +1,9 @@
-import React from 'react'
+import ViewOne from "../../../components/ViewOne"
 
-const page = ({blogId}) => {
+const page = ({params}) => {
   return (
     <div>
-      you are on {blogId} page
+      <ViewOne id = {params.blogId}/>
     </div>
   )
 }

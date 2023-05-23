@@ -4,25 +4,6 @@ const Home = () => {
 
     return (
         <div>
-            <div class="menu-btn">
-                <i class="fas fa-bars fa-2x"></i>
-            </div>
-            <div class="container">
-                <nav class="main-nav">
-                    <h1 className='logo'>Blog App</h1>
-                    <ul class="right-menu">
-                        <li>
-                        <a href="/signin">
-                            Login
-                        </a>
-                        </li>
-                        <li>
-                        <a href="/signup">
-                            Signup
-                        </a>
-                        </li>
-                    </ul>
-                </nav>
                 <header class="showcase">
                     <h2>Responsive Blog App</h2>
                     <p>
@@ -44,7 +25,7 @@ const Home = () => {
                         <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </section>
-            </div>
+            
             <footer class="footer">
                 <div class="footer-inner">
                 <div><i class="fas fa-globe fa-2x"></i> Developed by Rushyendra </div>
