@@ -10,7 +10,7 @@ const View = (props) => {
     )
     return (
         <div>
-            <section class="home-cards">
+            <section className="home-cards">
                 {ren}
                 <div>
                     <img src="https://i.ibb.co/LZPVKq9/card1.png" alt=""/>
@@ -19,7 +19,7 @@ const View = (props) => {
                     See how Katie Sowers, Asst. Coach for the 49ers, uses Surface Pro 7
                                     to put her plans into play.
                     </p>
-                    <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
+                    <a href="#">Learn More <i className="fas fa-chevron-right"></i></a>
                 </div>
             </section>
         </div>

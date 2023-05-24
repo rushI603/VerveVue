@@ -307,11 +307,15 @@
     color: #03e9f4;
     font-size: 12px;
   }
-  
-  .login-box form a {
+  form button{
+    border: none;
+    padding: 0;
+  }
+  .login-box form button {
+
     position: relative;
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 5px;
     color: #ffffff;
     font-size: 16px;
     text-decoration: none;
@@ -322,7 +326,7 @@
     letter-spacing: 4px;
   }
   
-  .login-box a:hover{
+  .login-box button:hover{
     color:#03e9f4;
   }
 

@@ -1,14 +1,41 @@
 import View from "../../components/View"
-const page = () => {
-  const ar = [{img:"https://i.ibb.co/LZPVKq9/card1.png",title:"Govinda",slug:"#",excerpt:"This is just an text", content:"This is the actual content"},
-              {img:"https://i.ibb.co/LZPVKq9/card1.png",title:"Govinda",slug:"#",excerpt:"This is just an text", content:"This is the actual content"},
-              {img:"https://i.ibb.co/LZPVKq9/card1.png",title:"Govinda",slug:"#",excerpt:"This is just an text  This is the actual content This is the actual content This is the actual content This is the actual content This is the actual content This is the actual content This is the actual content", content:"This is the actual content"},
-              {img:"https://i.ibb.co/LZPVKq9/card1.png",title:"Govinda",slug:"#",excerpt:"This is just an text", content:"This is the actual content"},
-              {img:"https://i.ibb.co/LZPVKq9/card1.png",title:"Govinda",slug:"#",excerpt:"This is just an text", content:"This is the actual content"},
-              {img:"https://i.ibb.co/LZPVKq9/card1.png",title:"Govinda",slug:"#",excerpt:"This is just an text", content:"This is the actual content"}
 
-
-]
+const page = async () => {
+  const hygraph = new GraphQLClient(
+    'https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master');
+  const {posts} = await hygraph.request(
+    `
+    {
+      posts {
+        comments {
+          author {
+            name
+            photo {
+              url
+            }
+          }
+          comment
+        }
+        author {
+          ... on Author {
+            name
+            photo {
+              url
+            }
+          }
+        }
+        likes
+        title
+        featuredImage {
+          url
+        }
+        content {
+          text
+        }
+      }
+    }
+    `
+  )
   //get all the posts from db
   return (
   <div>

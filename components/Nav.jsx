@@ -2,9 +2,9 @@ import React from 'react'
 
 const Nav = () => {
   return (
-    <nav class="main-nav">
+    <nav className="main-nav">
         <h1 className='logo'>Blog App</h1>
-        <ul class="right-menu">
+        <ul className="right-menu">
             <li>
             <a href="/signin">
                 Login
