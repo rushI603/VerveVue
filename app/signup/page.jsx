@@ -1,44 +1,81 @@
 "use client"
 
-import React from 'react'
-import {GraphQLClient} from 'graphql-request'
+import React,{ useState } from 'react'
+import hygraph from '../../utils/GraphQLConnection'
 import './style.css'
-import { useState } from 'react'
+const bcrypt = require('bcryptjs')
 
-const handleSubmit = async (e)=>{
-  e.preventDefault();
-  const email = e.target.email.value
-
-
-  const hygraph = new GraphQLClient(
-    'https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master');
-  const data = hygraph.request(`
-  query MyQuery {
-    authors(where: {email: "${email}"}) {
-      password
-    }
-  }
-  `)
-  console.log(data)
-  //if(author["password"])console.log(author["password"])
-}
 const Login = () => {
+  
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [userName, setUserName] = useState("");
+
+  function handleSubmit(e){
+    e.preventDefault()
+  
+    const data = hygraph.request(`
+    query MyQuery {
+      authors(where: {email: "${email}"}) {
+        password
+      }
+    }
+    `).
+    then((data)=>{
+      if (! /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))setPrompt("Invalid Email Id");
+       else if(data["authors"].length) setPrompt("User already exist");
+      else{
+        if(password.length<8) setPrompt("Password should atleast be of length 8");
+        else{
+          const hashedPassword = bcrypt.hashSync(password,10);
+          hygraph.request(`
+          mutation MyMutation {
+              createAuthor(data: {name: "${name}", password: "${password}", email: "${email}"}) {
+                id
+              }
+            }
+          `).then(
+        (data)=>{
+            console.log(data["createAuthor"]?.id!="")
+            if(data["createAuthor"]?.id!=""){
+              setPrompt("Account created successfully");
+              location.replace("http://localhost:3000/signin")
+            }
+        }
+    )
+            
+        
+        
+        }
+      }
+        
+    })
+    }
+
+
   return (
     <div>
-      <div className="login-box">
+      <div class="login-box">
         <h2>Login</h2>
-        <form action='localhost:3000/api/signin'>
+        <form onSubmit={(e)=>{handleSubmit(e)}}>
             <div className="user-box">
-            <input type="text" name="email" id='email' required/>
-            <label>Email</label>
+              <input type="text" id="email" name="email" value={email} onChange={(e)=>{setPrompt("");setEmail(e.target.value);}} required/>
+              <label>Email</label>
             </div>
             <div className="user-box">
-            <input type="password" name="password" id='password' required/>
-            <label>Password</label>
+              <input type="text" id="username" name="username" value={userName} onChange={(e)=>{setPrompt("");setUserName(e.target.value);}} required/>
+              <label>UserName</label>
             </div>
+            <div className="user-box">
+              <input type="password" name="password" id='password' value={password} onChange={(e)=>{setPrompt("");setPassword(e.target.value)}} required/>
+              <label>Password</label>
+            </div>
+            
             <button type='submit'>
               Submit
-            </button>
+            </button><br/>
+            <p className='login-prompt'>{prompt}</p>
         </form>
         </div>
     </div>

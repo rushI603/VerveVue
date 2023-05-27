@@ -1,13 +1,9 @@
 import React from 'react'
-const View = (props) => {
-    const ren = props["props"].map((item)=>
-        <div>
-            <img src={item.img} alt="post cover image" />
-            <h3>{item.title}</h3>
-            <p>{item.excerpt.slice(0,25)}...</p>
-            <a href={item.slug}>Read more</a>
-        </div>
-    )
+const View = ({posts}) => {
+    console.log(posts);
+    const ren
+     = <></>
+    
     return (
         <div>
             <section className="home-cards">
