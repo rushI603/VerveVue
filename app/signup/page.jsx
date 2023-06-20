@@ -6,7 +6,9 @@ import './style.css'
 const bcrypt = require('bcryptjs')
 
 const Login = () => {
-  
+  const message = document.getElementById("message-prompt");
+  const submit = document.getElementById("up-submit");
+  const [loading, setLoading] = useState(false)
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [prompt, setPrompt] = useState("");
@@ -14,6 +16,7 @@ const Login = () => {
 
   function handleSubmit(e){
     e.preventDefault()
+    submit.disabled=true;
   
     const data = hygraph.request(`
     query MyQuery {
@@ -31,22 +34,28 @@ const Login = () => {
           const hashedPassword = bcrypt.hashSync(password,10);
           hygraph.request(`
           mutation MyMutation {
-              createAuthor(data: {name: "${name}", password: "${password}", email: "${email}"}) {
+              createAuthor(data: {name: "${userName}", password: "${hashedPassword}", email: "${email}"}) {
                 id
               }
             }
-          `).then(
-        (data)=>{
-            console.log(data["createAuthor"]?.id!="")
-            if(data["createAuthor"]?.id!=""){
-              setPrompt("Account created successfully");
-              location.replace("http://localhost:3000/signin")
+          `).then(()=>{
+            hygraph.request(`
+            mutation MyMutation {
+              publishAuthor(where: {email: "${email}"}){
+                id
+              }
             }
-        }
-    )
             
-        
-        
+          `).then(
+          
+            (data)=>{
+                if(data["createAuthor"]?.id!=""){
+                  message.innerText="Account created successfully";
+                  location.replace("http://localhost:3000/signin")
+                }
+            }
+          )}
+    )
         }
       }
         
@@ -60,19 +69,19 @@ const Login = () => {
         <h2>Login</h2>
         <form onSubmit={(e)=>{handleSubmit(e)}}>
             <div className="user-box">
-              <input type="text" id="email" name="email" value={email} onChange={(e)=>{setPrompt("");setEmail(e.target.value);}} required/>
+              <input style={{borderColor:"black"}} type="email" id="email" name="email" value={email} onChange={(e)=>{setPrompt("");setEmail(e.target.value);}} required/>
               <label>Email</label>
             </div>
             <div className="user-box">
-              <input type="text" id="username" name="username" value={userName} onChange={(e)=>{setPrompt("");setUserName(e.target.value);}} required/>
+              <input style={{borderColor:"black"}} type="text" id="username" name="username" value={userName} onChange={(e)=>{setPrompt("");setUserName(e.target.value);}} required/>
               <label>UserName</label>
             </div>
             <div className="user-box">
-              <input type="password" name="password" id='password' value={password} onChange={(e)=>{setPrompt("");setPassword(e.target.value)}} required/>
+              <input style={{borderColor:"black"}} type="password" minlength="8" name="password" id='password' value={password} onChange={(e)=>{setPrompt("");setPassword(e.target.value)}} required/>
               <label>Password</label>
             </div>
             
-            <button type='submit'>
+            <button type='submit' id='up-submit' >
               Submit
             </button><br/>
             <p className='login-prompt'>{prompt}</p>

@@ -1,54 +1,61 @@
-"use client"
+'use client'
 
 import View from "../../components/View"
 import { useState,useEffect } from "react";
 import {GraphQLClient} from 'graphql-request'
 
-const page = async () => {
+const page = () => {
     const hygraph = new GraphQLClient(
     'https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master');
     
-    const [post,setPost] = useState([]);
+    const [posts,setPosts] = useState([]);
     useEffect(()=>{
-      hygraph.request(
-        `
-        {
-          posts {
-            comments {
+      const fetchData = async()=>{
+        try{
+        const response = await hygraph.request(
+          `
+          {
+            posts {
+              comments {
+                author {
+                  name
+                  photo {
+                    url
+                  }
+                }
+                comment
+              }
               author {
-                name
-                photo {
-                  url
+                ... on Author {
+                  name
+                  photo {
+                    url
+                  }
                 }
               }
-              comment
-            }
-            author {
-              ... on Author {
-                name
-                photo {
-                  url
-                }
+              likes
+              title
+              featuredImage {
+                url
               }
-            }
-            likes
-            title
-            featuredImage {
-              url
-            }
-            content {
-              text
+              content {
+                text
+              }
             }
           }
+          `)
+        setPosts(response.posts)
+        console.log(posts,response.posts)
         }
-        `
-      ).then((response)=>{setPost(response);console.log(post)})
-      // .then(
-      //   (data)=>setPost(console.log(data)))
+        catch(error){
+          console.log(error)
+        }
+      }
+      fetchData();
     },[])
   return (
   <div>
-    <View posts={post}/>
+    <View posts={posts}/>
   </div>
 )
 }

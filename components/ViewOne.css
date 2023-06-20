@@ -1,9 +1,17 @@
- .writable-fields {
+:root {
+    --image-grid: url(https://media.geeksforgeeks.org/auth-dashboard-uploads/is3_20210803.svg.svg);
+}
+
+.writable-fields {
     box-sizing: border-box;
     min-width: 0px;
     -webkit-box-flex: 1;
     flex-grow: 1;
     overflow-y: auto;
+}
+
+.loading {
+    animation: spin 1s linear infinite;
 }
 
 .feilds-wrapper {
@@ -111,3 +119,29 @@
     background-color: rgb(240, 242, 250);
     color: rgb(77, 86, 121);
 }
+
+
+.rich-text-editable-comment {
+    height: 100%;
+    width: 100%;
+    cursor: text;
+    padding: 10px;
+    min-height: 100px;
+    margin-left: auto;
+    box-sizing: border-box;
+    margin-right: auto;
+    outline: none;
+    border: 1px solid rgb(208, 213, 231);
+    border-radius: 13px;
+    background: #d3cce3; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #d3cce3, #e9e4f0); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #d3cce3, #e9e4f0);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px;
+}
+
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); } /* Starting point of the animation */
+    100% { transform: rotate(360deg); } /* Ending point of the animation */
+  }
