@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs')
 
 const Login = () => {
   const message = document.getElementById("message-prompt");
-  const submit = document.getElementById("up-submit");
   const [loading, setLoading] = useState(false)
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
@@ -15,8 +14,8 @@ const Login = () => {
   const [userName, setUserName] = useState("");
 
   function handleSubmit(e){
+    e.currentTarget.disabled = true;
     e.preventDefault()
-    submit.disabled=true;
   
     const data = hygraph.request(`
     query MyQuery {
@@ -66,7 +65,7 @@ const Login = () => {
   return (
     <div>
       <div class="login-box">
-        <h2>Login</h2>
+        <h2 style={{color: "black"}}>Login</h2>
         <form onSubmit={(e)=>{handleSubmit(e)}}>
             <div className="user-box">
               <input style={{borderColor:"black"}} type="email" id="email" name="email" value={email} onChange={(e)=>{setPrompt("");setEmail(e.target.value);}} required/>

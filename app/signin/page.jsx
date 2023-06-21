@@ -9,6 +9,7 @@ import './style.css'
 const bcrypt = require('bcryptjs');
 
 const Login = () => {
+  const messagePrompt = document.getElementById("message-prompt");
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
   const [prompt, setPrompt]= useState();
@@ -19,12 +20,13 @@ const Login = () => {
     }
   },[])
   async function handleSubmit(e){
-
+    e.currentTarget.disabled = true;
     e.preventDefault();
     document.getElementById("in-submit").ariaDisabled=true;
     const data = await hygraph.request(`
     query MyQuery {
       authors(where: {email: "${email}"}) {
+        id
         password
       }
     }
@@ -35,9 +37,9 @@ const Login = () => {
         console.log(hash)
         bcrypt.compare(password, hash,function (err, isMatch){
           if(isMatch){
-            // Cookies.set('blogappsession',hash,{expires:1})
-            console.log(Cookies.get('blogappsession'))
-            setMessage("Login Sucessful")
+            Cookies.set('blogappsession',data['authors'][0]['id'],{expires:1})
+            console.log(data['authors'][0]['id'])
+            messagePrompt.innerText="Login successful";
             location.replace("http://localhost:3000/")
           
           }
@@ -55,7 +57,6 @@ const Login = () => {
     <div>
       <div class="login-box">
         <h2 style={{color:"black"}}>Login</h2>
-        <h1 className='sucessful'>{message}</h1>
         <form onSubmit={(e)=>{handleSubmit(e)}}>
             <div className="user-box">
               <input style={{borderColor:"black"}} type="email" id="email" name="email" value={email} onChange={(e)=>{setPrompt("");setEmail(e.target.value);}} required/>

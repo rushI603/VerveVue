@@ -7,8 +7,8 @@ export default function Main() {
   return (
     <main >
       {/* <View props={ar}/> */}
-      {/* <Home/> */}
-      <Create/>
+      <Home/>
+      {/* <Create/> */}
     </main>
   )
 }

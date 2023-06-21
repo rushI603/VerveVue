@@ -3,12 +3,14 @@ import {GraphQLClient} from 'graphql-request'
 import {useState, useEffect} from 'react'
 import ContentEditable from "react-contenteditable"
 import "./ViewOne.css"
+import Loading from './Loading'
 const ViewOne = ({id}) => {
     const hygraph = new GraphQLClient(
     'https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master');
     
     const [post,setPost] = useState({});
     const [liked,setLiked] = useState(false);
+    const [likes, setLikes] = useState();
     const [loading, setLoading] = useState(true);
     useEffect(()=>{
       const fetchData = async()=>{
@@ -32,6 +34,7 @@ const ViewOne = ({id}) => {
         }`)
         setPost(response.post)
         setLoading(false)
+        setLikes(response.post?.likes)
         console.log(post,response.post)
         }
         catch(error){
@@ -41,19 +44,7 @@ const ViewOne = ({id}) => {
       fetchData();
     },[])
     return loading ?
-    <div style={{"height":"100vh","display":"flex","justifyContent":"center","alignItems":"center","flexDirection":"column"}}>
-      <svg
-        viewBox="0 0 1024 1024"
-        fill="currentColor"
-        height="10%"
-        width="10%"
-        className='loading'
-      >
-        <path d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z" />
-      </svg>
-      <br/>
-      Loading...
-    </div>
+    <Loading/>
     :( post?(
     <div style={{"height":"100vh"}}>
       <img style={{"width":"100%","height":"40%","margin-bottom":"10px"}} src={post?.featuredImage?.url}/>
@@ -69,15 +60,20 @@ const ViewOne = ({id}) => {
           >
             <path d="M4 21h1V8H4a2 2 0 00-2 2v9a2 2 0 002 2zM20 8h-7l1.122-3.368A2 2 0 0012.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 00-2-2z" />
           </svg>:
-          <svg
-          viewBox="0 0 1024 1024"
-          fill="currentColor"
-          height="1em"
-          width="1em"
-          onClick={()=>setLiked(true)}
-        >
-        <path d="M885.9 533.7c16.8-22.2 26.1-49.4 26.1-77.7 0-44.9-25.1-87.4-65.5-111.1a67.67 67.67 0 00-34.3-9.3H572.4l6-122.9c1.4-29.7-9.1-57.9-29.5-79.4A106.62 106.62 0 00471 99.9c-52 0-98 35-111.8 85.1l-85.9 311H144c-17.7 0-32 14.3-32 32v364c0 17.7 14.3 32 32 32h601.3c9.2 0 18.2-1.8 26.5-5.4 47.6-20.3 78.3-66.8 78.3-118.4 0-12.6-1.8-25-5.4-37 16.8-22.2 26.1-49.4 26.1-77.7 0-12.6-1.8-25-5.4-37 16.8-22.2 26.1-49.4 26.1-77.7-.2-12.6-2-25.1-5.6-37.1zM184 852V568h81v284h-81zm636.4-353l-21.9 19 13.9 25.4a56.2 56.2 0 016.9 27.3c0 16.5-7.2 32.2-19.6 43l-21.9 19 13.9 25.4a56.2 56.2 0 016.9 27.3c0 16.5-7.2 32.2-19.6 43l-21.9 19 13.9 25.4a56.2 56.2 0 016.9 27.3c0 22.4-13.2 42.6-33.6 51.8H329V564.8l99.5-360.5a44.1 44.1 0 0142.2-32.3c7.6 0 15.1 2.2 21.1 6.7 9.9 7.4 15.2 18.6 14.6 30.5l-9.6 198.4h314.4C829 418.5 840 436.9 840 456c0 16.5-7.2 32.1-19.6 43z" />
-        </svg>
+          <div>
+            <svg
+              viewBox="0 0 1024 1024"
+              fill="currentColor"
+              height="1em"
+              width="1em"
+              style={{display:"inline"}}
+              onClick={()=>setLiked(true)}
+              >
+            <path d="M885.9 533.7c16.8-22.2 26.1-49.4 26.1-77.7 0-44.9-25.1-87.4-65.5-111.1a67.67 67.67 0 00-34.3-9.3H572.4l6-122.9c1.4-29.7-9.1-57.9-29.5-79.4A106.62 106.62 0 00471 99.9c-52 0-98 35-111.8 85.1l-85.9 311H144c-17.7 0-32 14.3-32 32v364c0 17.7 14.3 32 32 32h601.3c9.2 0 18.2-1.8 26.5-5.4 47.6-20.3 78.3-66.8 78.3-118.4 0-12.6-1.8-25-5.4-37 16.8-22.2 26.1-49.4 26.1-77.7 0-12.6-1.8-25-5.4-37 16.8-22.2 26.1-49.4 26.1-77.7-.2-12.6-2-25.1-5.6-37.1zM184 852V568h81v284h-81zm636.4-353l-21.9 19 13.9 25.4a56.2 56.2 0 016.9 27.3c0 16.5-7.2 32.2-19.6 43l-21.9 19 13.9 25.4a56.2 56.2 0 016.9 27.3c0 16.5-7.2 32.2-19.6 43l-21.9 19 13.9 25.4a56.2 56.2 0 016.9 27.3c0 22.4-13.2 42.6-33.6 51.8H329V564.8l99.5-360.5a44.1 44.1 0 0142.2-32.3c7.6 0 15.1 2.2 21.1 6.7 9.9 7.4 15.2 18.6 14.6 30.5l-9.6 198.4h314.4C829 418.5 840 436.9 840 456c0 16.5-7.2 32.1-19.6 43z" />
+            </svg>
+            
+            <div style={{display:"inline", fontSize:"12px"}}> ({likes})</div>
+        </div>
         
         }
       </div>
@@ -105,6 +101,7 @@ const ViewOne = ({id}) => {
            <div className='rich-text-editable-comment' contentEditable="true" style={{"marginBottom":"10px"}}></div>
            <div style={{"display":"flex","justifyContent":"flex-end"}}>
             <button type='submit' 
+            onClick={(e)=>{publishComment}}
             style={{background:"#32c48d",padding:"5px",borderRadius:"10px",width:"60px","marginBottom":"20px"}}
             >Publish</button>
            </div>
