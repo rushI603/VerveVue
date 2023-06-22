@@ -1,3 +1,4 @@
+import autoprefixer from 'autoprefixer';
 import React from 'react';
 
 const View = ({ posts }) => {
@@ -8,23 +9,16 @@ const View = ({ posts }) => {
     <div>
       <section className="home-cards">
         {posts &&
-          posts.map((post) => (
-            <div className='each-post'>
-                <img className='all-one-img' src= {post.featuredImage.url}/>
-                <h3 className='all-one-heading'>{post.author.name}</h3>
-            </div>
 
+          posts.map((post) => (
+            <div className='each-post' style={{}} key={post.id}>
               
+              <img className='all-one-img' style={{position:"relative"}} src= {post.featuredImage.url}/>
+              <h3>{post.title}</h3>
+              <a href={`/viewblog/${post.id}`}>Read More...</a>
+            </div>
           ))}
-        <div>
-            <img src="https://i.ibb.co/LZPVKq9/card1.png" alt=""/>
-            <h3>New Surface Pro 7</h3>
-            <p>
-            See how Katie Sowers, Asst. Coach for the 49ers, uses Surface Pro 7
-                            to put her plans into play.
-            </p>
-            <a href="#">Learn More <i className="fas fa-chevron-right"></i></a>
-        </div>
+        
       </section>
     </div>
   );

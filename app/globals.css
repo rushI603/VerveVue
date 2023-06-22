@@ -387,24 +387,43 @@
     animation: transform 0.5s;
   }
 
-
   .each-post {
     transition: transform 0.3s ease-in;
   }
-
+  
+  .each-post img{
+    border-radius: 10px;
+    cursor: pointer;
+  }
   .each-post:hover {
     transform: scale(0.9);
   }
   .all-one-img {
     height: 146.5px;
   }
-
+/* 
   .all-one-heading {
 
+  } */
+
+  .login-message {
+    transition: pop 2.5s ease-in;
   }
 
   .login-box button:hover{
     color:#03e9f4;
+  }
+  @keyframes pop {
+    0%{
+      right:-10px;
+    }
+    50%{
+      right: 10px;
+    }
+    100% {
+      right: -10px;
+    }
+    
   }
 
   @media(max-width: 700px) {

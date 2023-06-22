@@ -3,6 +3,8 @@
 import View from "../../components/View"
 import { useState,useEffect } from "react";
 import {GraphQLClient} from 'graphql-request'
+import '../../components/ViewOne.css'
+import Loading from "../../components/Loading";
 
 const page = () => {
     const hygraph = new GraphQLClient(
@@ -41,10 +43,12 @@ const page = () => {
               content {
                 text
               }
+              id
             }
           }
           `)
         setPosts(response.posts)
+
         console.log(posts,response.posts)
         }
         catch(error){
@@ -55,7 +59,8 @@ const page = () => {
     },[])
   return (
   <div>
-    <View posts={posts}/>
+    {posts.length?<View posts={posts}/>:<Loading/>}
+    
   </div>
 )
 }
