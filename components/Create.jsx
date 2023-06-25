@@ -5,6 +5,7 @@ import Content from './Content'
 import ContentEditable from "react-contenteditable"
 import {GraphQLClient} from 'graphql-request'
 import './ViewOne.css'
+import './Content.css'
 const hygraph = new GraphQLClient(
   'https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master/upload');
 

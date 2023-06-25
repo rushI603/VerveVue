@@ -45,7 +45,8 @@ const ViewOne = ({id}) => {
         
         if(/\S/.test(comment)){
           setComments([{
-            username:data.author.username,
+            "author":
+            {"username":data.author.username},
             comment:comment,
           }].concat(comments))
           e.target.disabled = false;
@@ -68,27 +69,14 @@ const ViewOne = ({id}) => {
               }
             }`
           )
-          await hygraph.request(`
+          console.log(await hygraph.request(`
           mutation MyMutation {
             updatePost(data: {comments: {connect: {where: {id: "${mutationData?.createComment?.id}"}}}}, where: {id:"${id}"}) {
               id
             }
           }
-          `)
-          await hygraph.request(
-            `mutation MyMutation {
-              publishComment(where: {id: "${mutationData?.createComment?.id}"}) {
-                id
-              }
-            }`
-          )
-          await hygraph.request(`
-          mutation MyMutation {
-            updatePost(data: {comments: {connect: {where: {id: "${mutationData?.createComment?.id}"}}}}, where: {id:"${id}"}) {
-              id
-            }
-          }
-          `)
+          `))
+          
           
         }
         else{
@@ -115,13 +103,18 @@ const ViewOne = ({id}) => {
             }
             comments {
               comment
+              author {
+                username
+              }
             }
             content {
               html
             }
           }
         }`)
+        console.log(response)
         setPost(response.post)
+        setComments(response?.post?.comments)
         setLoading(false)
         setLikes(response.post?.likes)
         }
@@ -204,7 +197,7 @@ const ViewOne = ({id}) => {
       </div>
       <div className='comments'>
         {comments.map((comment)=><>
-          <strong style={{"fontSize":"15px","color":"gray"}}>{comment.username}</strong>
+          <strong style={{"fontSize":"15px","color":"gray"}}>{comment?.author?.username}</strong>
           <p style={{"paddingLeft":"10px","fontSize":"13px","marginBottom":"10px"}}>{comment.comment}</p><br/>
         </>)}
         

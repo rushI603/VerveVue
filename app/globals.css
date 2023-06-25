@@ -406,24 +406,9 @@
 
   } */
 
-  .login-message {
-    transition: pop 2.5s ease-in;
-  }
-
+  
   .login-box button:hover{
     color:#03e9f4;
-  }
-  @keyframes pop {
-    0%{
-      right:-10px;
-    }
-    50%{
-      right: 10px;
-    }
-    100% {
-      right: -10px;
-    }
-    
   }
 
   @media(max-width: 700px) {

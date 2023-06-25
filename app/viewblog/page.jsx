@@ -20,7 +20,7 @@ const page = () => {
             posts {
               comments {
                 author {
-                  name
+                  username
                   photo {
                     url
                   }
@@ -29,7 +29,7 @@ const page = () => {
               }
               author {
                 ... on Author {
-                  name
+                  username
                   photo {
                     url
                   }
