@@ -64,10 +64,11 @@ const ViewOne = ({id}) => {
           console.log(mutationData)
           await hygraph.request(
             `mutation MyMutation {
-              publishComment(where: {id: "${mutationData?.createComment?.id}"}) {
+              publishComment(where: {id: "${mutationData?.createComment?.id}"}, to: PUBLISHED) {
                 id
               }
-            }`
+            }
+            `
           )
           console.log(await hygraph.request(`
           mutation MyMutation {
@@ -76,7 +77,21 @@ const ViewOne = ({id}) => {
             }
           }
           `))
-          
+          await hygraph.request(`
+          mutation MyMutation {
+            publishPost(where: {id: "${id}"}, to: PUBLISHED){
+              id
+            }
+          }
+          `)
+          await hygraph.request(
+            `mutation MyMutation {
+              publishComment(where: {id: "${mutationData?.createComment?.id}"}, to: PUBLISHED) {
+                id
+              }
+            }
+            `
+          )
           
         }
         else{
@@ -196,13 +211,14 @@ const ViewOne = ({id}) => {
         </div>
       </div>
       <div className='comments'>
-        {comments.map((comment)=><>
+        {
+          comments.length?
+        comments.map((comment)=><>
           <strong style={{"fontSize":"15px","color":"gray"}}>{comment?.author?.username}</strong>
           <p style={{"paddingLeft":"10px","fontSize":"13px","marginBottom":"10px"}}>{comment.comment}</p><br/>
-        </>)}
-        
-        <strong style={{"fontSize":"15px","color":"gray"}}>Comment Author</strong>
-        <p style={{"paddingLeft":"10px","fontSize":"13px","marginBottom":"20px"}}>Comment Content</p><br/>
+        </>)
+        :"No Comments Yet"
+        }
       </div>
       {displayError && <div className='login-message' style={{width:"100px",position:'fixed',bottom:'10px',right:"10px",background:"gray",padding:"5px"}}>Please login</div>}
     </div>
