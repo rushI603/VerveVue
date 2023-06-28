@@ -18,17 +18,22 @@ const Create = () => {
   
   function handleSubmit(e){
     e.preventDefault();
-    console.log({title,prompt,image,text})
+    const input = document.querySelector('input[type="file"]')
+    const form = new FormData()
+    console.log(input)
+    form.append('file',input)
     fetch(`https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master/upload`,{
       method:'POST',
+      mode:"no-cors",
       headers: {
-        Authorization: `Bearer "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImdjbXMtbWFpbi1wcm9kdWN0aW9uIn0.eyJ2ZXJzaW9uIjozLCJpYXQiOjE2ODQ4MjMyNjcsImF1ZCI6WyJodHRwczovL2FwaS1hcC1zb3V0aC0xLmh5Z3JhcGguY29tL3YyL2NsaHU3ZHl3ZjAxcHgwMXVoYXMwaGZqdmUvbWFzdGVyIiwibWFuYWdlbWVudC1uZXh0LmdyYXBoY21zLmNvbSJdLCJpc3MiOiJodHRwczovL21hbmFnZW1lbnQuZ3JhcGhjbXMuY29tLyIsInN1YiI6IjIyY2MwMWIyLTA0ZTYtNGYzMy1iOWZiLWUwZWE3Njg2OTExOSIsImp0aSI6ImNsaHp3OXQyeTJ4cm0wMXVoN3Y3ZGJpaGEifQ.2u5uO4unDSbElb_5plnJ4P8f0-iQAG8M3FR6dFvMXtiZMh1ce99j7Qa-ff-q-T6xixHKYL_E6ge6WOza0MDTepfKh3BHCxbGAvXc1uKHC1xAt7ZoeE0QnuQ3Cr_3UM9s-0wrWpOhcsUIR5H-d5MsjcmGxSFGmRK6g5mvNnEKefkQdiwNbZ7Vg2kixWiyc4Gbx5zb55FhEB2EZgkE3ytmmZYF4FOFfH1eJq-Ywe7lxaUZdGNFNJor4rBpmWheLYL7XdFrPPtO7x1SMGEtgJxt6rUclHIzyh1aQrYpggSiO7-VvOGHKD_HwH9scLJfZAryy8E6Gt8ae-hlD7yNbTcQr7SyXX5mqRsEvBed3TUhysC90SFmtbJtqjDff9MEso-BOsf17vN0nRIdnYlQo9maJqXLNd9wpZVU1iSolekM5wgasx51WcrbvHQuZjpAHVtSYZ7OsbrlhKFAmHuA16wcLry6QBOnw-H9XEw8lmjglwwIqF4l5wwY6gbRB5anHkUnH7wbSb8216P2iGPe24xedRpH1YTrXtZ3ecxUAGRWNu6h_Tp8XB2CbdR-6ZC_KV2brasIjGdr1nABKTZuKbWYwcdmDCILftdr_Pmd-llh1KfBYxrclnsA75imW96PqwQeWCGTX0z8Jwr8j9OJ00iRftWFPAE82YTttpMas8o8aao"`,
+        Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImdjbXMtbWFpbi1wcm9kdWN0aW9uIn0.eyJ2ZXJzaW9uIjozLCJpYXQiOjE2ODc5MzYyODIsImF1ZCI6WyJodHRwczovL2FwaS1hcC1zb3V0aC0xLmh5Z3JhcGguY29tL3YyL2NsaHU3ZHl3ZjAxcHgwMXVoYXMwaGZqdmUvbWFzdGVyIiwibWFuYWdlbWVudC1uZXh0LmdyYXBoY21zLmNvbSJdLCJpc3MiOiJodHRwczovL21hbmFnZW1lbnQuZ3JhcGhjbXMuY29tLyIsInN1YiI6ImY4MWUxYmYyLTljMzEtNDU2YS1hOTAxLTZkNTA3MDk1NzVlYSIsImp0aSI6ImNsamZkb2l1ODAycncwMXVsMzN5MWMybWMifQ.Ujsycl8vobre2UglKQp9NQeh0CK7w1GHXjS--PU015kBiZ3t31IFKH070AnNXfk-ogq8WRrirUPYoAzehkHMZEgByWAba08yc7EtLiRi05my-D4p5Dhx6KNExuNflqKHIA2gstzxBSjJU14C8bz5peFd8X1t4_ksOVRm1ZV-NgCfBeWtS-JcLrq0qy2N9gX2jyMcPiLUqLKTY9e2iOlGIsRzpSR1Jggr0w7P27NwcA8P59q8KJb61lIPZouJxCPaiyGtgd-HYS9RAGArJfNB4BFjipfeiW2JJZ0XlK4dQLE1nLoVIHTI0PRy_Nznxkoq_xvxFKCCVwx0MuWriUNLFm8oCJ__xJlk4TBuWfqE_ojPOwJAHewBAfhEsn76U9F0CixfR4L4-IMCZBcfy6Nj60VAgG9Xpzo7JJZtTacEfCgM1J00GKYVOSF6aHMbuNSIjheCYqD-4XfedhKUnFQOPbjMrdxfLEWORcSRrmnF_0KAHuTF3_F3WbugfBsLM-i5Oy9bFIadZkh6Gt7MxI6VOjHw8T3HH72MWs2XHUbryhXkxLojeswG_U4bpXGMkq4FzIZSDsdNiK2nw0zm16tThAhyXLJSebE_E6qW9TmQVR-ZYCTIF50Oozk-VjP-oMmI5wu8pX5JWVKJ40CSaef-38uEWovQlOZoh8K0sBbMigc`,
       },
-      body: image,
+      body: form,
     }).
     then((data)=>{
       console.log(data)
     })
+    .catch((e)=>console.log(e,"error"))
 
   }
   return (
@@ -64,7 +69,7 @@ const Create = () => {
               </div>
               <div className='photo-upload'>
                 <input type="file" id="selectedFile" value={image}  onChange={(e)=>{setImage(e.target.value);setName(e.target.files[0].name)}}/>
-                <input type="button" value={image?name:"Browse..."}/>
+                <input type="button" value={image?name:"Browse..." }/>
               </div>
             </div>            
             <div className="flex-item">
