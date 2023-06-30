@@ -25,6 +25,7 @@ const Create = () => {
     fetch(`https://api-ap-south-1.hygraph.com/v2/clhu7dywf01px01uhas0hfjve/master/upload`,{
       method:'POST',
       mode:"no-cors",
+      "cache-control":"no-cache",
       headers: {
         Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImdjbXMtbWFpbi1wcm9kdWN0aW9uIn0.eyJ2ZXJzaW9uIjozLCJpYXQiOjE2ODc5MzYyODIsImF1ZCI6WyJodHRwczovL2FwaS1hcC1zb3V0aC0xLmh5Z3JhcGguY29tL3YyL2NsaHU3ZHl3ZjAxcHgwMXVoYXMwaGZqdmUvbWFzdGVyIiwibWFuYWdlbWVudC1uZXh0LmdyYXBoY21zLmNvbSJdLCJpc3MiOiJodHRwczovL21hbmFnZW1lbnQuZ3JhcGhjbXMuY29tLyIsInN1YiI6ImY4MWUxYmYyLTljMzEtNDU2YS1hOTAxLTZkNTA3MDk1NzVlYSIsImp0aSI6ImNsamZkb2l1ODAycncwMXVsMzN5MWMybWMifQ.Ujsycl8vobre2UglKQp9NQeh0CK7w1GHXjS--PU015kBiZ3t31IFKH070AnNXfk-ogq8WRrirUPYoAzehkHMZEgByWAba08yc7EtLiRi05my-D4p5Dhx6KNExuNflqKHIA2gstzxBSjJU14C8bz5peFd8X1t4_ksOVRm1ZV-NgCfBeWtS-JcLrq0qy2N9gX2jyMcPiLUqLKTY9e2iOlGIsRzpSR1Jggr0w7P27NwcA8P59q8KJb61lIPZouJxCPaiyGtgd-HYS9RAGArJfNB4BFjipfeiW2JJZ0XlK4dQLE1nLoVIHTI0PRy_Nznxkoq_xvxFKCCVwx0MuWriUNLFm8oCJ__xJlk4TBuWfqE_ojPOwJAHewBAfhEsn76U9F0CixfR4L4-IMCZBcfy6Nj60VAgG9Xpzo7JJZtTacEfCgM1J00GKYVOSF6aHMbuNSIjheCYqD-4XfedhKUnFQOPbjMrdxfLEWORcSRrmnF_0KAHuTF3_F3WbugfBsLM-i5Oy9bFIadZkh6Gt7MxI6VOjHw8T3HH72MWs2XHUbryhXkxLojeswG_U4bpXGMkq4FzIZSDsdNiK2nw0zm16tThAhyXLJSebE_E6qW9TmQVR-ZYCTIF50Oozk-VjP-oMmI5wu8pX5JWVKJ40CSaef-38uEWovQlOZoh8K0sBbMigc`,
       },
