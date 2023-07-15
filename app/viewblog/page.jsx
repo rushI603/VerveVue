@@ -1,7 +1,7 @@
 'use client'
 
 import View from "../../components/View"
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {GraphQLClient} from 'graphql-request'
 import '../../components/ViewOne.css'
 import Loading from "../../components/Loading";
@@ -48,8 +48,6 @@ const page = () => {
           }
           `)
         setPosts(response.posts)
-
-        console.log(posts,response.posts)
         }
         catch(error){
           console.log(error)

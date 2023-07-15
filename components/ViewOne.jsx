@@ -61,7 +61,6 @@ const ViewOne = ({id}) => {
             }
             `
           )
-          console.log(mutationData)
           await hygraph.request(
             `mutation MyMutation {
               publishComment(where: {id: "${mutationData?.createComment?.id}"}, to: PUBLISHED) {
@@ -70,13 +69,13 @@ const ViewOne = ({id}) => {
             }
             `
           )
-          console.log(await hygraph.request(`
+          await hygraph.request(`
           mutation MyMutation {
             updatePost(data: {comments: {connect: {where: {id: "${mutationData?.createComment?.id}"}}}}, where: {id:"${id}"}) {
               id
             }
           }
-          `))
+          `)
           await hygraph.request(`
           mutation MyMutation {
             publishPost(where: {id: "${id}"}, to: PUBLISHED){
@@ -95,7 +94,6 @@ const ViewOne = ({id}) => {
           
         }
         else{
-          console.log(true)
           setEmpty(true);
         }
       }
@@ -127,7 +125,6 @@ const ViewOne = ({id}) => {
             }
           }
         }`)
-        console.log(response)
         setPost(response.post)
         setComments(response?.post?.comments)
         setLoading(false)

@@ -34,11 +34,9 @@ const Login = () => {
 
       if(data["authors"].length){
         const hash = data['authors'][0]['password'];
-        console.log(hash)
         bcrypt.compare(password, hash,function (err, isMatch){
           if(isMatch){
             Cookies.set('blogappsession',data['authors'][0]['id'],{expires:1})
-            console.log(data['authors'][0]['id'])
             messagePrompt.innerText="Login successful";
             location.replace("http://localhost:3000/")
           
@@ -47,7 +45,6 @@ const Login = () => {
         })
       }
       else{
-        console.log(data)
         setPrompt("Please signup you don't have an account")
       }
       

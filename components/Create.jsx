@@ -30,7 +30,6 @@ import './Content.css'
         const fileInput = document.querySelector('input[type="file"]')
         const formdata = new FormData();
         formdata.append("fileUpload", fileInput.files[0], image);
-        console.log(text)
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
@@ -42,7 +41,6 @@ import './Content.css'
           .then(response => response.json())
           .then(async (result) => {
             const {id, url} = result;
-            console.log(url,id,result)
             var publish = await hygraph.request(`
             mutation MyMutation {
               publishAsset(where: {id: "${id}"},to: PUBLISHED){
@@ -70,7 +68,6 @@ import './Content.css'
             text.current=""
             
             setButtonClick(false)
-            console.log(publish)
           })
           .catch(error => {console.log('error', error)
           setButtonClick(false)});
@@ -78,8 +75,8 @@ import './Content.css'
       }
       else{
         
-        if (title===""){setTitleCheck(true);console.log("esle")}
-        if (prompt===""){setPromptCheck(true);console.log("esle")}
+        if (title===""){setTitleCheck(true);}
+        if (prompt===""){setPromptCheck(true)}
         if (!image) setImageCheck(true);
         if (!/\S/.test(text.current)) setContentCheck(true);
         setButtonClick(false)
@@ -136,7 +133,7 @@ import './Content.css'
               <ContentEditable
                 className='rich-text-editable'
                 html={text.current}
-                onChange={(e)=>{console.log(text.current);text.current=e.target.value;setContentCheck(false)}}
+                onChange={(e)=>{text.current=e.target.value;setContentCheck(false)}}
                 /><br/>
                 <button id='content-submit' type="submit" disabled={buttonClick} style={{background:"#32c48d",padding:"10px",borderRadius:"10px",position:"fixed",bottom:'1rem',right:'1rem'}}>Save & Publish</button>
                 </div>
