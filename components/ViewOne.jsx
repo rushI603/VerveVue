@@ -18,21 +18,16 @@ const ViewOne = ({id}) => {
     const [session, setSession] = useState(false);
     const [displayError, setDisplayError] = useState(false);
     const [empty,setEmpty] = useState(false)
-
+    const comment = useRef("");
 
     async function publishComment(e){
-
       setDisplayError(!session);
-
-
       const timer = setTimeout(() => {
         setDisplayError(false);
       }, 2500);
 
 
       if(session){
-        const comment=document.getElementById("newcomment").innerHTML
-        document.getElementById("newcomment").innerHTML=""
         e.currentTarget.disabled = true;
         const userId=validate();
         const data = await hygraph.request(`
@@ -43,18 +38,20 @@ const ViewOne = ({id}) => {
         }`)
 
         
-        if(/\S/.test(comment)){
+        if(/\S/.test(comment.current)){
+          
+          console.log(comment.current,"current")
           setComments([{
             "author":
             {"username":data.author.username},
-            comment:comment,
+            "comment":comment.current,
           }].concat(comments))
           e.target.disabled = false;
           const mutationData =
           await hygraph.request(
             `mutation MyMutation {
               createComment(
-                data: {comment: "${comment}", post: {connect: {id: "${id}"}}, author: {connect: {id: "${userId}"}}}
+                data: {comment: "${comment.current}", post: {connect: {id: "${id}"}}, author: {connect: {id: "${userId}"}}}
               ) {
                 id
               }
@@ -191,12 +188,13 @@ const ViewOne = ({id}) => {
         </div>
         <div style={{"position":"relative"}}>
           <div style={{"display":"flex","width":"100%","flexDirection":"column","borderRadius":"13px",}}>
-           <div className='rich-text-editable-comment' 
+           <ContentEditable className='rich-text-editable-comment' 
             id = "newcomment"
+            html={comment.current}
             disabled={false}
-            onClick={(e)=>setEmpty(false)} 
-            contentEditable="true" style={{"marginBottom":"10px",paddingLeft:"15px"}}>
-           </div>
+            onChange={(e)=>{console.log(comment.current);comment.current=e.target.value;setEmpty(false)}}
+            contentEditable="true" style={{"marginBottom":"10px",paddingLeft:"15px"}}/>
+
            <div style={{"display":"flex","justifyContent":"flex-end"}}>
             <button type='submit' 
             onClick={(e)=>{publishComment(e)}}
