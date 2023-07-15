@@ -28,6 +28,11 @@
     opacity: 0.6;
 }
 
+#content-submit:disabled {
+    opacity: 0.6;
+}
+
+
 @keyframes pop {
   0%{
     right:-100px;

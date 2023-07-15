@@ -3,13 +3,13 @@
 import hygraph from '../../utils/GraphQLConnection' 
 import {useRouter} from 'next/router';
 import Cookies from 'js-cookie';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import validate from '../../utils/GetCookieBlog';
 import './style.css'
 const bcrypt = require('bcryptjs');
 
 const Login = () => {
-  const messagePrompt = document.getElementById("message-prompt");
+  const messagePrompt = useRef();
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
   const [prompt, setPrompt]= useState();

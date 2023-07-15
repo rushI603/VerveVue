@@ -334,6 +334,10 @@
     outline: none;
     background: transparent;
   }
+
+  .text-red {
+    color: red;
+  }
   .login-box .user-box label {
     position: absolute;
     top:0;
