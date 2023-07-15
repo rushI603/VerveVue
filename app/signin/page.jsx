@@ -14,15 +14,15 @@ const Login = () => {
   const [password,setPassword] = useState();
   const [prompt, setPrompt]= useState();
   const [message,setMessage] = useState();
+  const [submitDisable, setSubmitDisable] = useState(false)
   useEffect(()=>{
     if(Cookies.get("blogappsession")?.length){
       location.replace("http://localhost:3000/");
     }
   },[])
   async function handleSubmit(e){
-    e.currentTarget.disabled = true;
     e.preventDefault();
-    document.getElementById("in-submit").ariaDisabled=true;
+    setSubmitDisable(true)
     const data = await hygraph.request(`
     query MyQuery {
       authors(where: {email: "${email}"}) {
@@ -43,10 +43,12 @@ const Login = () => {
           }
           else{setPrompt("Password doesn't match")}
         })
+
       }
       else{
         setPrompt("Please signup you don't have an account")
       }
+      setSubmitDisable(false);
       
     
   }
@@ -63,7 +65,7 @@ const Login = () => {
               <input style={{borderColor:"black"}} type="password" name="password" id='password' value={password} onChange={(e)=>{setPrompt("");setPassword(e.target.value)}} required/>
               <label >Password</label>
             </div>
-            <button type='submit' id='in-submit' >
+            <button type='submit' disabled={submitDisable} id='in-submit' >
               Submit
             </button>
             <p className='login-prompt'>{prompt}</p>

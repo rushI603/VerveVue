@@ -16,8 +16,8 @@ const ViewOne = ({id}) => {
     const [loading, setLoading] = useState(true);
     const [comments, setComments] = useState([])
     const [session, setSession] = useState(false);
-    const [empty,setEmpty] = useState(false)
     const [displayError, setDisplayError] = useState(false);
+    const [empty,setEmpty] = useState(false)
 
 
     async function publishComment(e){

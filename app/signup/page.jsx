@@ -1,20 +1,19 @@
 "use client"
 
-import React,{ useState } from 'react'
+import React,{ useRef, useState } from 'react'
 import hygraph from '../../utils/GraphQLConnection'
 import './style.css'
 const bcrypt = require('bcryptjs')
 
 const Login = () => {
-  const message = document.getElementById("message-prompt");
-  const [loading, setLoading] = useState(false)
+  const [disableButton, setDisableButton] = useState(false);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [prompt, setPrompt] = useState("");
   const [userName, setUserName] = useState("");
 
   function handleSubmit(e){
-    e.currentTarget.disabled = true;
+    setDisableButton(true)
     e.preventDefault()
   
     const data = hygraph.request(`
@@ -46,10 +45,8 @@ const Login = () => {
             }
             
           `).then(
-          
             (data)=>{
                 if(data["createAuthor"]?.id!=""){
-                  message.innerText="Account created successfully";
                   location.replace("http://localhost:3000/signin")
                 }
             }
@@ -80,7 +77,7 @@ const Login = () => {
               <label>Password</label>
             </div>
             
-            <button type='submit' id='up-submit' >
+            <button type='submit' disabled={disableButton} id='up-submit' >
               Submit
             </button><br/>
             <p className='login-prompt'>{prompt}</p>
