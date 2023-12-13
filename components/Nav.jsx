@@ -11,7 +11,8 @@ const Nav = () => {
   },[])
   return (
     <nav className="main-nav">
-        <h1 className='logo'>VerveVue</h1>
+        <a href='/'>
+        <h1 className='logo'>VerveVue</h1></a>
         <div id='message-prompt'></div>
         <ul className="right-menu">
             <li>
@@ -45,7 +46,7 @@ const Nav = () => {
             <li>
               {session && 
               <>
-                <a onClick={()=>{Cookies.set("blogappsession","",{expires:1});setSession(false)}}>
+                <a style={{cursor:'pointer'}} onClick={()=>{Cookies.set("blogappsession","",{expires:1});setSession(false)}}>
                   Logout
                 </a>
               </>

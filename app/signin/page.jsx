@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { useState, useEffect, useRef } from 'react';
 import validate from '../../utils/GetCookieBlog';
 import './style.css'
+import Loading from '@/components/Loading';
 const bcrypt = require('bcryptjs');
 
 const Login = () => {
@@ -15,6 +16,7 @@ const Login = () => {
   const [prompt, setPrompt]= useState();
   const [message,setMessage] = useState();
   const [submitDisable, setSubmitDisable] = useState(false)
+  const [loading, setLoading] = useState(false)
   useEffect(()=>{
     if(Cookies.get("blogappsession")?.length){
       location.replace("http://localhost:3000/");
@@ -22,6 +24,7 @@ const Login = () => {
   },[])
   async function handleSubmit(e){
     e.preventDefault();
+    setLoading(true)
     setSubmitDisable(true)
     const data = await hygraph.request(`
     query MyQuery {
@@ -54,6 +57,8 @@ const Login = () => {
   }
   return (
     <div>
+      {
+        !loading?
       <div class="login-box">
         <h2 style={{color:"black"}}>Login</h2>
         <form onSubmit={(e)=>{handleSubmit(e)}}>
@@ -71,6 +76,9 @@ const Login = () => {
             <p className='login-prompt'>{prompt}</p>
         </form>
         </div>
+        :
+        <Loading/>
+        }
     </div>
   )
 }

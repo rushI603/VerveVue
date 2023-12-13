@@ -12,10 +12,11 @@ const View = ({ posts }) => {
 
           posts.map((post) => (
             <div className='each-post' style={{}} key={post.id}>
-              
-              <img className='all-one-img' style={{position:"relative"}} src= {post.featuredImage.url}/>
-              <h3>{post.title}</h3>
-              <a href={`/viewblog/${post.id}`}>Read More...</a>
+              <a href={`/viewblog/${post.id}`}>
+                <img className='all-one-img' style={{position:"relative"}} src= {post.featuredImage.url}/>
+                <h3 className='text-[#0f0f0f]'>{post.title}</h3>
+                Read More...
+              </a>
             </div>
           ))}
         

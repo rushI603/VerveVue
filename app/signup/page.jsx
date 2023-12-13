@@ -3,6 +3,7 @@
 import React,{ useRef, useState } from 'react'
 import hygraph from '../../utils/GraphQLConnection'
 import './style.css'
+import Loading from '@/components/Loading'
 const bcrypt = require('bcryptjs')
 
 const Login = () => {
@@ -11,9 +12,11 @@ const Login = () => {
   const [password,setPassword] = useState("");
   const [prompt, setPrompt] = useState("");
   const [userName, setUserName] = useState("");
-
+  const [loading, setLoading] = useState(false)
   function handleSubmit(e){
     setDisableButton(true)
+    setLoading(true)
+    console.log(userName,password,email)
     e.preventDefault()
   
     const data = hygraph.request(`
@@ -32,7 +35,7 @@ const Login = () => {
           const hashedPassword = bcrypt.hashSync(password,10);
           hygraph.request(`
           mutation MyMutation {
-              createAuthor(data: {name: "${userName}", password: "${hashedPassword}", email: "${email}"}) {
+              createAuthor(data: {username: "${userName}", password: "${hashedPassword}", email: "${email}"}) {
                 id
               }
             }
@@ -47,6 +50,7 @@ const Login = () => {
           `).then(
             (data)=>{
                 if(data["createAuthor"]?.id!=""){
+                  setLoading(false)
                   location.replace("http://localhost:3000/signin")
                 }
             }
@@ -60,9 +64,10 @@ const Login = () => {
 
 
   return (
-    <div>
+    <div>{
+      !loading?
       <div class="login-box">
-        <h2 style={{color: "black"}}>Login</h2>
+        <h2 style={{color: "black"}}>Sign Up</h2>
         <form onSubmit={(e)=>{handleSubmit(e)}}>
             <div className="user-box">
               <input style={{borderColor:"black"}} type="email" id="email" name="email" value={email} onChange={(e)=>{setPrompt("");setEmail(e.target.value);}} required/>
@@ -83,6 +88,9 @@ const Login = () => {
             <p className='login-prompt'>{prompt}</p>
         </form>
         </div>
+        :
+        <Loading/>
+        }
     </div>
   )
 }

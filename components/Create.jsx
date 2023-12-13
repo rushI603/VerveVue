@@ -7,6 +7,7 @@ import hygraph from '@/utils/GraphQLConnection'
 import './ViewOne.css'
 import './Content.css'
 import validate from '@/utils/GetCookieBlog'
+import Loading from './Loading'
 
 
   const Create = () => {
@@ -22,6 +23,7 @@ import validate from '@/utils/GetCookieBlog'
     const [buttonClick, setButtonClick] = useState(false);
     const [session, setSession] = useState(false);
     const [displayError, setDisplayError] = useState(false);
+    const [loading, setLoading] = useState(false);
     
 
     
@@ -31,11 +33,13 @@ import validate from '@/utils/GetCookieBlog'
 
     function handleSubmit(e){
       e.preventDefault();
+      setLoading(true);
       setDisplayError(!session);
       const timer = setTimeout(() => {
         setDisplayError(false);
       }, 2500);
       setButtonClick(true)
+      console.log(title, prompt,text)
 
       if(session && name!=="" && /\S/.test(text.current) && image && prompt!=="" && title!==""){
         const myHeaders = new Headers();
@@ -64,7 +68,7 @@ import validate from '@/utils/GetCookieBlog'
             var {createPost} = await hygraph.request(`
             mutation MyMutation {
               createPost(
-                data: {title: "${title}", prompt: "${prompt}", content: {children: [{type: "paragraph", children: [{text: "${text.current}"}]}]}, featuredImage: {connect: {id: "${id}"}}, author: {connect: {Author: {id: "${userId}"}}}}
+                data: {title: "${title}", likes: ${0}, prompt: "${prompt}", content: {children: [{type: "paragraph", children: [{text: "${text.current}"}]}]}, featuredImage: {connect: {id: "${id}"}}, author: {connect: {Author: {id: "${userId}"}}}}
               ) {
                 id
               }
@@ -79,8 +83,10 @@ import validate from '@/utils/GetCookieBlog'
             setTitle('')
             setName('Browse...')
             text.current=""
-            
+            setLoading(false)
             setButtonClick(false)
+            location.replace(`http://localhost:3000/viewblog/${createPost?.id}`)
+
           })
           .catch(error => {console.log('error', error)
           setButtonClick(false)});
@@ -97,6 +103,9 @@ import validate from '@/utils/GetCookieBlog'
 
   }
   return (
+    <div>
+    {
+      !loading?
     <form onSubmit={(e)=>{handleSubmit(e)}}>
     <div className='writable-fields'>
       <div className="fields-wrapper">
@@ -154,7 +163,10 @@ import validate from '@/utils/GetCookieBlog'
         </div>
       </div>
     </div>
-    </form>
+    </form>:
+    <Loading/>
+    }
+  </div>
   )
 }
 

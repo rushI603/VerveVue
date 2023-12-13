@@ -53,14 +53,14 @@ const Home = () => {
         fetchData();
       },[])
     return (
-        <div>
+        <div className='w-full'>
                 <header className="showcase">
-                    <h2>VerveVue</h2>
-                    <p>
-                        Create your own Blog, we host you gain 
+                    <h2 className='text-[#fff]'>Most liked post</h2>
+                    <p className='text-[#f0f0f0]'>
+                        A story of a alone boy
                     </p>
-                    <a href="#" className="btn">
-                        Create Now <i className="fas fa-chevron-right"></i>
+                    <a href="/viewblog/clq38j1660xub0bpl2diamv9w" className="btn">
+                        Read Now <i className="fas fa-chevron-right"></i>
                     </a>
                 </header>
                 <h2 className='heading'>Recent Posts</h2><br/>

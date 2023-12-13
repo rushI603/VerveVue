@@ -27,9 +27,9 @@
   }
   
   .container {
-    width: 90%;
-    max-width: 1100px;
-    margin: auto;
+    width: 100%;
+    /* max-width: 1100px; */
+    /* margin: auto; */
   }
 
   .main-nav {
@@ -37,7 +37,7 @@
     align-items: center;
     justify-content: space-between;
     height: 60px;
-    padding: 20px 0;
+    /* padding: 20px 0; */
     font-size: 13px;
   }
 
